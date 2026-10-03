@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Azalina Sri Ayu 🌻</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #0f172a;
+    font-family: 'Fredoka', 'Quicksand', 'Segoe UI', sans-serif;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+#instruction {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+
+    padding: 12px 28px;
+    border-radius: 50px;
+
+    color: #4a2e2b;
+    background: rgba(255, 245, 235, 0.9);
+    border: 3px solid #ffd1a9;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#progress {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #8c5341;
+    font-weight: normal;
+}
+
+#message {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(15, 10, 20, 0.65);
+    backdrop-filter: blur(12px);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#message.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.card {
+    position: relative;
+    width: min(520px, 88vw);
+    padding: 35px 30px;
+
+    border-radius: 35px;
+
+    background: linear-gradient(135deg, #ffffff 0%, #fff5ee 100%);
+    border: 4px solid #ffe2ca;
+
+    box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(255, 180, 140, 0.4);
+
+    text-align: center;
+    color: #5a4038;
+
+    transform: translateY(40px) scale(0.85);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#message.show .card {
+    transform: translateY(0) scale(1);
+}
+
+/* HIASAN BUNGA DI RUANG UTAMA KAD */
+.floral-header {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 18px auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffe3ec 0%, #fff0d6 100%);
+    border: 4px dashed #ff9b71;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(224, 109, 83, 0.25);
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.floral-header .main-emoji {
+    font-size: 68px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+
+.floral-badge {
+    position: absolute;
+    font-size: 24px;
+    animation: spin 12s linear infinite;
+}
+
+.badge-1 { top: -6px; left: 10px; }
+.badge-2 { top: -6px; right: 10px; }
+.badge-3 { bottom: -6px; left: 10px; }
+.badge-4 { bottom: -6px; right: 10px; }
+
+.card h1 {
+    font-size: clamp(24px, 5vw, 34px);
+    margin-bottom: 2px;
+    color: #e06d53;
+}
+
+.card h2 {
+    font-size: clamp(18px, 3.5vw, 22px);
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #ff9b71;
+}
+
+.card p {
+    line-height: 1.7;
+    font-size: 15px;
+    color: #6d5248;
+}
+
+.close {
+    margin-top: 22px;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ff8c72, #e56b55);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(229, 107, 85, 0.4);
+    transition: all 0.3s ease;
+}
+
+.close:hover {
+    transform: scale(1.08);
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div id="instruction">
+    🌻 Tekan bunga ikut urutan! 
+    <div id="progress">Bunga 1 daripada 5</div>
+</div>
+
+<div id="message">
+    <div class="card">
+        <!-- RUANG GAMBAR DIGANTIKAN DENGAN HIASAN BUNGA CANTIK -->
+        <div class="floral-header">
+            <span class="main-emoji">💐</span>
+            <span class="floral-badge badge-1">🌸</span>
+            <span class="floral-badge badge-2">🌺</span>
+            <span class="floral-badge badge-3">🌷</span>
+            <span class="floral-badge badge-4">🌼</span>
+        </div>
+
+        <h1>Happy Birthday! 🌻</h1>
+        <h2>Azalina Sri Ayu</h2>
+
+        <p>
+            Semoga hari istimewa kau hari ni dipenuhi dengan
+            senyuman, kebahagiaan dan perkara-perkara yang baik.
+            <br><br>
+            Semoga segala urusan kau dipermudahkan,
+            dimurahkan rezeki, diberikan kesihatan yang baik
+            dan segala impian yang kau simpan perlahan-lahan
+            menjadi kenyataan.
+            <br><br>
+            <i>May your life always bloom beautifully! 🌷✨</i>
+        </p>
+
+        <button class="close" onclick="closeMessage()">
+            Kembali ke Taman 🌸
+        </button>
+    </div>
+</div>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let W, H;
+let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+function resize() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+window.addEventListener("resize", resize);
+resize();
+
+// ----------------------------------------------------
+// MOUSE TRAIL SPARKLES
+// ----------------------------------------------------
+let mouseX = 0, mouseY = 0;
+let cursorTrail = [];
+
+window.addEventListener("pointermove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    for (let i = 0; i < 2; i++) {
+        cursorTrail.push({
+            x: mouseX + (Math.random() - 0.5) * 10,
+            y: mouseY + (Math.random() - 0.5) * 10,
+            size: Math.random() * 3 + 2,
+            color: `hsl(${Math.random() * 50 + 40}, 100%, 75%)`,
+            vx: (Math.random() - 0.5) * 1.5,
+            vy: (Math.random() - 0.5) * 1.5 - 0.5,
+            life: 1
+        });
+    }
+});
+
+function drawCursorTrail() {
+    for (let i = cursorTrail.length - 1; i >= 0; i--) {
+        const p = cursorTrail[i];
+        p.x += p.vx; p.y += p.vy;
+        p.life -= 0.03;
+
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        if (p.life <= 0) cursorTrail.splice(i, 1);
+    }
+}
+
+// ----------------------------------------------------
+// FLOWERS DATA
+// ----------------------------------------------------
+const flowers = [
+    { x: .18, y: .72, color: "#ffcb47", type: "sunflower" },
+    { x: .35, y: .66, color: "#ff7b9c", type: "rose" },
+    { x: .52, y: .74, color: "#b882ff", type: "tulip" },
+    { x: .70, y: .67, color: "#ffffff", type: "daisy" },
+    { x: .85, y: .75, color: "#ff9ecd", type: "sakura" }
+];
+
+let currentFlower = 0;
+let particles = [];
+
+function flowerPosition(f) {
+    return { x: W * f.x, y: H * f.y };
+}
+
+// ----------------------------------------------------
+// LATAR BELAKANG GRADIENT WARNA-WARNI TAMAN
+// ----------------------------------------------------
+function drawBackground() {
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, "#1e293b");
+    grad.addColorStop(0.4, "#3b2d54");
+    grad.addColorStop(0.7, "#804d6e");
+    grad.addColorStop(1, "#c86d7c");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+}
+
+// ----------------------------------------------------
+// LUKISAN BUNGA INTERAKTIF
+// ----------------------------------------------------
+function drawFlower(f, index, time) {
+    const p = flowerPosition(f);
+    const active = index === currentFlower;
+    const completed = index < currentFlower;
+
+    const distToMouse = Math.hypot(mouseX - p.x, mouseY - p.y);
+    const isHovered = distToMouse < 60;
+    const sway = Math.sin(time * 0.002 + index) * 4;
+
+    ctx.save();
+    ctx.translate(p.x + sway, p.y);
+
+    // Batang
+    ctx.strokeStyle = "#589a58";
+    ctx.lineWidth = 6;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(-sway, 35, 0, 70);
+    ctx.stroke();
+
+    // Daun
+    ctx.fillStyle = "#6bb06b";
+    ctx.beginPath();
+    ctx.ellipse(-14, 40, 14, 7, -0.4, 0, Math.PI * 2);
+    ctx.ellipse(14, 48, 14, 7, 0.4, 0, Math.PI * 2);
+    ctx.fill();
+
+    let scale = active ? (1 + Math.sin(time * 0.008) * 0.12) : (isHovered ? 1.15 : 1);
+    ctx.scale(scale, scale);
+
+    // Glowing Outer Ring
+    if (active) {
+        ctx.fillStyle = `rgba(255, 230, 120, ${0.35 + Math.sin(time * 0.006) * 0.15})`;
+        ctx.beginPath(); ctx.arc(0, 0, 42, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // Kelopak Bunga
+    ctx.fillStyle = f.color;
+    if (f.type === "sunflower") {
+        for (let i = 0; i < 12; i++) {
+            let a = (i / 12) * Math.PI * 2;
+            ctx.beginPath();
+            ctx.ellipse(Math.cos(a) * 25, Math.sin(a) * 25, 11, 22, a, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.fillStyle = "#795548";
+        ctx.beginPath(); ctx.arc(0, 0, 18, 0, Math.PI * 2); ctx.fill();
+    } else {
+        for (let i = 0; i < 6; i++) {
+            let a = (i / 6) * Math.PI * 2;
+            ctx.beginPath();
+            ctx.arc(Math.cos(a) * 18, Math.sin(a) * 18, 16, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.fillStyle = f.type === "daisy" ? "#ffca28" : "#fff3e0";
+        ctx.beginPath(); ctx.arc(0, 0, 12, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // Muka Comel Bunga
+    ctx.fillStyle = "#3e2723";
+    ctx.beginPath();
+    ctx.arc(-4, -2, 2.5, 0, Math.PI * 2);
+    ctx.arc(4, -2, 2.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Nombor 1 hingga 5
+    ctx.fillStyle = completed ? "#81c784" : "rgba(255, 255, 255, 0.95)";
+    ctx.beginPath(); ctx.arc(0, -48, 15, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = completed ? "#4caf50" : "#ffb74d";
+    ctx.lineWidth = 2.5; ctx.stroke();
+
+    ctx.fillStyle = completed ? "#ffffff" : "#5d4037";
+    ctx.font = "bold 14px sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(completed ? "✓" : index + 1, 0, -47);
+
+    ctx.restore();
+}
+
+// ----------------------------------------------------
+// LETUPAN SPARKLES
+// ----------------------------------------------------
+function createExplosion(x, y) {
+    for (let i = 0; i < 35; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 5;
+        particles.push({
+            type: "circle",
+            x, y,
+            vx: Math.cos(a) * speed,
+            vy: Math.sin(a) * speed,
+            life: 1,
+            color: `hsl(${Math.random() * 40 + 40}, 100%, 70%)`
+        });
+    }
+
+    for (let i = 0; i < 10; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const speed = 1 + Math.random() * 3;
+        particles.push({
+            type: "star",
+            x, y,
+            vx: Math.cos(a) * speed,
+            vy: Math.sin(a) * speed - 1,
+            life: 1,
+            size: 12 + Math.random() * 6
+        });
+    }
+}
+
+function drawParticles() {
+    for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx; p.y += p.vy;
+        p.vy += 0.05;
+        p.life -= 0.02;
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.life);
+
+        if (p.type === "circle") {
+            ctx.fillStyle = p.color;
+            ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI * 2); ctx.fill();
+        } else if (p.type === "star") {
+            ctx.fillStyle = "#ffcb47";
+            ctx.font = `${p.size}px sans-serif`;
+            ctx.fillText("✨", p.x, p.y);
+        }
+
+        ctx.restore();
+        if (p.life <= 0) particles.splice(i, 1);
+    }
+}
+
+// ----------------------------------------------------
+// ANIMASI
+// ----------------------------------------------------
+function animate(time) {
+    ctx.clearRect(0, 0, W, H);
+
+    drawBackground();
+
+    flowers.forEach((f, i) => {
+        drawFlower(f, i, time);
+    });
+
+    drawParticles();
+    drawCursorTrail();
+
+    requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
+// ----------------------------------------------------
+// APLIKASI KLIK / SENTUHAN
+// ----------------------------------------------------
+canvas.addEventListener("pointerdown", function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+
+    const f = flowers[currentFlower];
+    const p = flowerPosition(f);
+
+    const distance = Math.hypot(mx - p.x, my - p.y);
+
+    if (distance < 75) {
+        createExplosion(p.x, p.y);
+        currentFlower++;
+
+        if (currentFlower >= flowers.length) {
+            document.getElementById("instruction").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("instruction").style.display = "none";
+                document.getElementById("message").classList.add("show");
+            }, 700);
+        } else {
+            document.getElementById("progress").textContent = 
+                `Bunga ${currentFlower + 1} daripada 5`;
+        }
+    }
+});
+
+function closeMessage() {
+    document.getElementById("message").classList.remove("show");
+    currentFlower = 0;
+    const inst = document.getElementById("instruction");
+    inst.style.display = "block";
+    setTimeout(() => inst.style.opacity = "1", 50);
+    document.getElementById("progress").textContent = "Bunga 1 daripada 5";
+}
+</script>
+
+</body>
+</html>
